@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+<!-- JSON files -->
+
+  <!--( a ) Fav Icon -->
+    
+  <link rel="icon" href="images/icontab.jpg">
+
+
+
+  <title>Slick Ooops News</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="css/finalbreak.css">
+
+
+
+
+
+</head>
+<body>
+
+
+
+    <header class="header">
+        <div class="header__inner">
+          <h1 class="header__title">
+		   <img src="images/logo.jpg" />
+            Oops Times
+          </h1>
+          <a id="menu" class="header__menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"/>
+            </svg>
+          </a>
+        </div>
+      </header>
+
+
+
+
+
+
+
+  <div class="container">
+   
+    <!-- Navs -->
+  <div class="navy">
+    <nav id="drawer" class="nav">
+      <ul class="nav__list">
+          <li class="nav__item">  <button class="btn btn-primary mr-4" id="getTopnews">Home</button> </li>
+          <li class="nav__item">  <button class="btn btn-primary mr-4" id="getPosts">BBCNews</button> </li>
+          <li class="nav__item">  <button class="btn btn-primary mr-4" id="getSource">Source</button> </li>
+          <li class="nav__item">  <button class="btn btn-primary mr-4" id="getSearch">Blog</button> </li>
+          <li class="nav__item"> <div style="color:white; font-weight:bold;" href="#" class="btn btn-danger mr-z">More </div></button>
+      </ul>
+    </nav> </div>
+    <hr>
+    <div id="output"></div>
+    
+  </div>
+
+  <script>
+  
+    document.getElementById('getPosts').addEventListener('click', getPosts);
+    
+
+    document.getElementById('getSource').addEventListener('click', getSource);
+    document.getElementById('getTopnews').addEventListener('click', getTopnews);
+    document.getElementById('getSearch').addEventListener('click', getSearch);
+
+
+  
+    
+//  <p>${post.urlToImage}</p>
+// get source news here
+
+function getSource(){
+      fetch('https://newsapi.org/v1/sources?' +
+          'country=us&' +
+          'apiKey=1134cc1a912042b5bf7c81eb9abbd62d')
+      .then((res) => res.json())
+          
+      .then((data) => {
+        
+        let output = '<h2 class="mb-4">Source</h2>';
+        data.sources.forEach(function(post){
+          output += `
+            <div class="card card-body mb-3 getsource">
+              <h3>${post.name}</h3>
+              <p>${post.description}</p>
+             
+              <a target ="_blank" href="${post.url}">Full News here </a>
+              <button class="sourcebutton">${post.category}</button>
+              <p>Country: ${post.country}</p>
+                 
+            </div>
+          `;
+        });
+        document.getElementById('output').innerHTML = output;
+      })
+                }
+
+
+
+
+
+// get Other Top Search here
+
+
+
+function getSearch(){
+      fetch('https://newsapi.org/v2/everything?' +
+          'q=Apple&' +
+          'from=2018-04-09&' +
+          'sortBy=popularity&' +
+          'apiKey=1134cc1a912042b5bf7c81eb9abbd62d')
+      .then((res) => res.json())
+          
+      .then((data) => {
+        
+        let output = '<h2 class="mb-4">Blog post</h2>';
+        data.articles.forEach(function(post){
+          output += `
+            <div class="card card-body mb-3 getsource">
+            
+              
+              <h4>${post.title}</h4>
+              <h5>by: &nbsp ${post.author}</h5>
+              <p>${post.description}</p>
+              <a target ="_blank" href="${post.url}">Full News here </a>
+              <img src="${post.urlToImage}" height=50% width=50% />            
+              <p>${post.publishedAt}</p>
+             
+                 
+            </div>
+          `;
+        });
+        document.getElementById('output').innerHTML = output;
+      })
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// get Other Top Breaking news here
+
+function getTopnews(){
+      fetch('https://newsapi.org/v2/top-headlines?' +
+          'country=us&' +
+          'apiKey=1134cc1a912042b5bf7c81eb9abbd62d')
+      .then((res) => res.json())
+          
+      .then((data) => {
+        
+        let output = '<h2 class="mb-4">Top Breaking News</h2>';
+        data.articles.forEach(function(post){
+          output += `
+            <div class="card card-body mb-3">
+              <h3>${post.author}</h3>
+              <h4>${post.title}</h4>
+              <p>${post.description}</p>
+              <a target ="_blank" href="${post.url}">Full News here </a>
+              <img src="${post.urlToImage}" height=50% width=50% />            
+              <p>${post.publishedAt}</p>
+             
+            </div>
+          `;
+        });
+        document.getElementById('output').innerHTML = output;
+      })
+                }
+
+
+
+
+
+
+
+// Get BBC News Here
+    
+    
+    function getPosts(){
+      fetch('https://newsapi.org/v2/top-headlines?' +
+          'sources=bbc-news&' +
+          'apiKey=1134cc1a912042b5bf7c81eb9abbd62d')
+      .then((res) => res.json())
+      .then((data) => {
+        
+        let output = '<h2 class="mb-4">BBC News</h2>';
+        data.articles.forEach(function(post){
+          output += `
+            <div class="card card-body mb-3">
+              <h3>${post.author}</h3>
+              <h4>${post.title}</h4>
+              <p>${post.description}</p>
+              <a target ="_blank" href="${post.url}">Full News here </a>
+              <img src="${post.urlToImage}" height=50% width=50% />
+              <p>${post.publishedAt}</p>
+            </div>
+          `;
+        });
+        document.getElementById('output').innerHTML = output;
+      })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+
+
+
+
+<script>
+  /*
+         * Open the drawer when the menu ison is clicked.
+         */
+         var menu = document.querySelector('#menu');
+        var main = document.querySelector('main');
+        var drawer = document.querySelector('.nav');
+  
+        menu.addEventListener('click', function(e) {
+          drawer.classList.toggle('open');
+          e.stopPropagation();
+        });
+   //     main.addEventListener('click', function() {
+  //       drawer.classList.remove('open');
+   //     });
+  
+  
+  </script>
+  
+
+
+
+
+
+
+
+
+
+
+  <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js')
+          .then(function() {
+            console.log('SW registered');
+          });
+      }
+      
+
+
+
+      self.addEventListener('activate', function () {
+  console.log('SW Activated');
+});
+
+      </script>
+
+
+  
+
+
+
+
+</body>
+</html>
