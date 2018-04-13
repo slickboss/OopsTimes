@@ -8,7 +8,9 @@
 
 <!-- JSON files -->
 
-
+  <!--( a ) Fav Icon -->
+    
+  <link rel="icon" href="images/icontab.jpg">
 
 
 
@@ -30,6 +32,7 @@
     <header class="header">
         <div class="header__inner">
           <h1 class="header__title">
+		   <img src="images/logo.jpg" />
             Oops Times
           </h1>
           <a id="menu" class="header__menu">
@@ -49,16 +52,16 @@
   <div class="container">
    
     <!-- Navs -->
- 
+  <div class="navy">
     <nav id="drawer" class="nav">
       <ul class="nav__list">
           <li class="nav__item">  <button class="btn btn-primary mr-4" id="getTopnews">Home</button> </li>
           <li class="nav__item">  <button class="btn btn-primary mr-4" id="getPosts">BBCNews</button> </li>
           <li class="nav__item">  <button class="btn btn-primary mr-4" id="getSource">Source</button> </li>
-         
-          <li class="nav__item"> <a style="color:white; font-weight:bold;" href="#" class="btn btn-success mr-z" id="getTop">More</a></a></button>
+          <li class="nav__item">  <button class="btn btn-primary mr-4" id="getSearch">Blog</button> </li>
+          <li class="nav__item"> <div style="color:white; font-weight:bold;" href="#" class="btn btn-danger mr-z">More </div></button>
       </ul>
-    </nav>
+    </nav> </div>
     <hr>
     <div id="output"></div>
     
@@ -71,6 +74,7 @@
 
     document.getElementById('getSource').addEventListener('click', getSource);
     document.getElementById('getTopnews').addEventListener('click', getTopnews);
+    document.getElementById('getSearch').addEventListener('click', getSearch);
 
 
   
@@ -103,6 +107,53 @@ function getSource(){
         document.getElementById('output').innerHTML = output;
       })
                 }
+
+
+
+
+
+// get Other Top Search here
+
+
+
+function getSearch(){
+      fetch('https://newsapi.org/v2/everything?' +
+          'q=Apple&' +
+          'from=2018-04-09&' +
+          'sortBy=popularity&' +
+          'apiKey=1134cc1a912042b5bf7c81eb9abbd62d')
+      .then((res) => res.json())
+          
+      .then((data) => {
+        
+        let output = '<h2 class="mb-4">Blog post</h2>';
+        data.articles.forEach(function(post){
+          output += `
+            <div class="card card-body mb-3 getsource">
+            
+              
+              <h4>${post.title}</h4>
+              <h5>by: &nbsp ${post.author}</h5>
+              <p>${post.description}</p>
+              <a target ="_blank" href="${post.url}">Full News here </a>
+              <img src="${post.urlToImage}" height=50% width=50% />            
+              <p>${post.publishedAt}</p>
+             
+                 
+            </div>
+          `;
+        });
+        document.getElementById('output').innerHTML = output;
+      })
+                }
+
+
+
+
+
+
+
+
 
 
 
@@ -152,7 +203,7 @@ function getTopnews(){
       .then((res) => res.json())
       .then((data) => {
         
-        let output = '<h2 class="mb-4">Top News BBC</h2>';
+        let output = '<h2 class="mb-4">BBC News</h2>';
         data.articles.forEach(function(post){
           output += `
             <div class="card card-body mb-3">
