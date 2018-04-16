@@ -32,8 +32,8 @@
     <header class="header">
         <div class="header__inner">
           <h1 class="header__title">
-		   <img src="images/logo.jpg" />
-            Oops Times
+		   <img src="images/icontab.jpg" />
+            Times
           </h1>
           <a id="menu" class="header__menu">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -42,9 +42,6 @@
           </a>
         </div>
       </header>
-
-
-
 
 
 
@@ -83,6 +80,7 @@
 // get source news here
 
 function getSource(){
+  // fetch('https://newsapi.org/v1/sources?')
       fetch('https://newsapi.org/v1/sources?' +
           'country=us&' +
           'apiKey=1134cc1a912042b5bf7c81eb9abbd62d')
@@ -97,6 +95,7 @@ function getSource(){
               <h3>${post.name}</h3>
               <p>${post.description}</p>
              
+                  <img src="${post.urlsToLogos}" height=50% width=50% />
               <a target ="_blank" href="${post.url}">Full News here </a>
               <button class="sourcebutton">${post.category}</button>
               <p>Country: ${post.country}</p>
